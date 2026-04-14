@@ -588,6 +588,7 @@ async function load() {
       }
     }
     setTimeout(load, 2000);
+  }, []);
 
   // Counter
   useEffect(() => {
