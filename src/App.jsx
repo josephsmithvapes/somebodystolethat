@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 (() => {
   const l = document.createElement("link");
   l.rel = "stylesheet";
-  l.href = "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap";
+  l.href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap";
   document.head.appendChild(l);
 })();
 
@@ -19,9 +19,9 @@ const T = {
   ruleHard: "#0f0e0c",
   red:      "#b91c1c",
   green:    "#15803d",
-  serif:    "'Playfair Display', Georgia, serif",
-  body:     "'Lora', Georgia, serif",
-  mono:     "'DM Mono', monospace",
+  serif:    "'IBM Plex Serif', Georgia, serif",
+  body:     "'Inter', system-ui, sans-serif",
+  mono:     "'IBM Plex Mono', monospace",
 };
 
 // ── STATIC FALLBACK HEADLINES (shown instantly, replaced by live) ──────────────
@@ -188,10 +188,10 @@ const WHISTLEBLOWER_PROGRAMS = [
 // ── SECTION RULE ───────────────────────────────────────────────────────────────
 function Rule({ label, number }) {
   return (
-    <div style={{ display:"flex", alignItems:"center", gap:16, margin:"52px 0 36px" }}>
+    <div className="section-rule" style={{ display:"flex", alignItems:"center", gap:16, margin:"52px 0 36px" }}>
       {number && <span style={{ fontFamily:T.mono, fontSize:10, color:T.quiet, letterSpacing:1, flexShrink:0 }}>{number}</span>}
       <div style={{ flex:1, height:1, background:T.ruleHard }} />
-      {label && <span style={{ fontFamily:T.mono, fontSize:9, color:T.ink, letterSpacing:3, textTransform:"uppercase", flexShrink:0 }}>{label}</span>}
+      {label && <span style={{ fontFamily:T.mono, fontSize:11, color:T.ink, letterSpacing:2, textTransform:"uppercase", flexShrink:0 }}>{label}</span>}
       <div style={{ flex:1, height:1, background:T.ruleHard }} />
     </div>
   );
@@ -220,7 +220,7 @@ function Diagram({ id, def, ready }) {
   }, [ready]);
   return (
     <div ref={ref} style={{ overflowX:"auto", minHeight:80 }}>
-      <div style={{ fontFamily:T.mono, fontSize:9, color:T.quiet, padding:"20px 0", letterSpacing:2 }} aria-hidden="true">Rendering diagram…</div>
+      <div style={{ fontFamily:T.mono, fontSize:11, color:T.quiet, padding:"20px 0", letterSpacing:2 }} aria-hidden="true">Rendering diagram…</div>
     </div>
   );
 }
@@ -248,15 +248,15 @@ function NewsTicker({ headlines }) {
 
   const items = [...headlines, ...headlines];
   return (
-    <div style={{ background:T.ink, overflow:"hidden", height:30, display:"flex", alignItems:"center" }} role="marquee" aria-label="Fraud Wire — latest fraud enforcement news">
-      <div style={{ flexShrink:0, padding:"0 16px", fontFamily:T.mono, fontSize:8, color:T.red, letterSpacing:3, borderRight:"1px solid #2a2520", height:"100%", display:"flex", alignItems:"center", whiteSpace:"nowrap" }} aria-hidden="true">
+    <div style={{ background:T.ink, overflow:"hidden", height:30, display:"flex", alignItems:"center" }} role="region" aria-label="Fraud Wire — latest fraud enforcement news" aria-hidden="true">
+      <div style={{ flexShrink:0, padding:"0 16px", fontFamily:T.mono, fontSize:10, color:T.red, letterSpacing:2, borderRight:"1px solid #2a2520", height:"100%", display:"flex", alignItems:"center", whiteSpace:"nowrap" }} aria-hidden="true">
         FRAUD WIRE
       </div>
       <div style={{ overflow:"hidden", flex:1 }} aria-hidden="true">
         <div ref={ref} style={{ display:"flex", whiteSpace:"nowrap", willChange:"transform" }}>
           {items.map((h,i) => (
-            <span key={i} style={{ fontFamily:T.body, fontStyle:"italic", fontSize:11, color:"#c8c0b8", padding:"0 28px", borderRight:"1px solid #2a2520", display:"inline-flex", alignItems:"center", height:30, gap:8 }}>
-              <span style={{ color:T.red, fontSize:8 }}>◆</span>{h.text}
+            <span key={i} style={{ fontFamily:T.body, fontStyle:"italic", fontSize:13, color:"#c8c0b8", padding:"0 28px", borderRight:"1px solid #2a2520", display:"inline-flex", alignItems:"center", height:30, gap:8 }}>
+              <span style={{ color:T.red, fontSize:10 }}>◆</span>{h.text}
             </span>
           ))}
         </div>
@@ -278,14 +278,14 @@ function SessionWidget() {
   return (
     <aside aria-label="Fraud losses since you arrived" style={{ position:"fixed", bottom:"max(24px, env(safe-area-inset-bottom, 24px))", right:24, zIndex:200, background:T.white, border:`1px solid ${T.ruleHard}`, padding:"14px 18px 12px", maxWidth:200, boxShadow:"0 2px 20px rgba(0,0,0,0.08)" }}>
       <div style={{ display:"flex", justifyContent:"space-between", marginBottom:8 }}>
-        <span style={{ fontFamily:T.mono, fontSize:8, color:T.red, letterSpacing:3 }}>SINCE YOU ARRIVED</span>
-        <button onClick={() => setVis(false)} aria-label="Dismiss" style={{ fontFamily:T.mono, fontSize:11, color:T.quiet, cursor:"pointer", background:"none", border:"none", padding:0 }}>×</button>
+        <span style={{ fontFamily:T.mono, fontSize:10, color:T.red, letterSpacing:2 }}>SINCE YOU ARRIVED</span>
+        <button onClick={() => setVis(false)} aria-label="Dismiss" style={{ fontFamily:T.mono, fontSize:13, color:T.quiet, cursor:"pointer", background:"none", border:"none", padding:"4px 6px", minHeight:32, lineHeight:1 }}>×</button>
       </div>
       <div style={{ fontFamily:T.serif, fontSize:20, fontWeight:900, color:T.ink, lineHeight:1, marginBottom:4 }}>
         {fmtShort(stolen)}
       </div>
       <div style={{ height:1, background:T.rule, margin:"8px 0" }} />
-      <div style={{ fontFamily:T.body, fontStyle:"italic", fontSize:11, color:T.quiet }}>stolen in {fmtDur(elapsed)}</div>
+      <div style={{ fontFamily:T.body, fontStyle:"italic", fontSize:13, color:T.quiet }}>stolen in {fmtDur(elapsed)}</div>
     </aside>
   );
 }
@@ -295,7 +295,7 @@ function FeaturedCard({ item, idx }) {
   const cat = CATS.find(c => c.id === item.category) || CATS[0];
   return (
     <article style={{ flex:"1 1 200px", minWidth:0, borderTop:`2px solid ${T.ink}`, paddingTop:14, animation:`fadeUp 0.5s ease ${idx*0.1}s both` }}>
-      <div style={{ fontFamily:T.mono, fontSize:8, color:T.quiet, letterSpacing:3, textTransform:"uppercase", marginBottom:10 }}>
+      <div style={{ fontFamily:T.mono, fontSize:10, color:T.quiet, letterSpacing:2, textTransform:"uppercase", marginBottom:10 }}>
         {cat.label} · {item.date} · {item.location}
       </div>
       <h3 style={{ fontFamily:T.serif, fontSize:16, fontWeight:700, color:T.ink, lineHeight:1.35, marginBottom:10 }}>{item.title}</h3>
@@ -317,16 +317,16 @@ function CatTile({ cat, total, onClick }) {
       onMouseLeave={() => setHov(false)}
       role="button" tabIndex={0}
       aria-label={`View ${cat.label} fraud breakdown`}
-      style={{ borderTop:`2px solid ${hov?T.ink:T.rule}`, paddingTop:14, cursor:"pointer", transition:"border-color 0.15s", outline:"none" }}
+      style={{ borderTop:`2px solid ${hov?T.ink:T.rule}`, paddingTop:14, cursor:"pointer", transition:"border-color 0.15s" }}
     >
-      <div style={{ fontFamily:T.mono, fontSize:8, color:T.quiet, letterSpacing:3, textTransform:"uppercase", marginBottom:8 }}>
+      <div style={{ fontFamily:T.mono, fontSize:10, color:T.quiet, letterSpacing:2, textTransform:"uppercase", marginBottom:8 }}>
         {cat.icon}  ${cat.annualB}B / yr
       </div>
       <div style={{ fontFamily:T.serif, fontSize:16, fontWeight:700, color:T.ink, lineHeight:1.3, marginBottom:8 }}>{cat.label}</div>
-      <p style={{ fontFamily:T.body, fontSize:11, fontStyle:"italic", color:T.quiet, lineHeight:1.6, marginBottom:14 }}>{cat.tagline}</p>
+      <p style={{ fontFamily:T.body, fontSize:13, fontStyle:"italic", color:T.quiet, lineHeight:1.6, marginBottom:14 }}>{cat.tagline}</p>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", borderTop:`1px solid ${T.rule}`, paddingTop:10 }}>
         <span style={{ fontFamily:T.mono, fontSize:11, color:T.red }}>{fmtShort(total)}</span>
-        <span style={{ fontFamily:T.body, fontStyle:"italic", fontSize:11, color:hov?T.ink:T.quiet, transition:"color 0.15s" }}>Read more →</span>
+        <span style={{ fontFamily:T.body, fontStyle:"italic", fontSize:13, color:hov?T.ink:T.quiet, transition:"color 0.15s" }}>Read more →</span>
       </div>
     </div>
   );
@@ -345,20 +345,20 @@ function WhoPays({ mReady }) {
       <p style={{ fontFamily:T.body, fontSize:15, color:T.dim, lineHeight:1.85, maxWidth:660, marginBottom:40 }}>
         Fraud has no victimless category. Every dollar stolen ripples outward through insurers, banks, and government agencies — until it reaches the same place: the everyday consumer and taxpayer.
       </p>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))", border:`1px solid ${T.rule}`, marginBottom:48 }}>
+      <div className="cost-grid" style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))", border:`1px solid ${T.rule}`, marginBottom:48 }}>
         {costs.map(([l,v],i) => (
           <div key={l} style={{ padding:"18px 16px", borderRight:`1px solid ${T.rule}`, borderBottom:`1px solid ${T.rule}` }}>
             <div style={{ fontFamily:T.serif, fontSize:20, fontWeight:900, color:T.ink, marginBottom:4 }}>{v}</div>
-            <div style={{ fontFamily:T.body, fontSize:11, fontStyle:"italic", color:T.quiet, lineHeight:1.5 }}>{l}</div>
+            <div style={{ fontFamily:T.body, fontSize:13, fontStyle:"italic", color:T.quiet, lineHeight:1.5 }}>{l}</div>
           </div>
         ))}
         <div style={{ padding:"18px 16px", background:T.ink, borderBottom:`1px solid ${T.rule}` }}>
           <div style={{ fontFamily:T.serif, fontSize:20, fontWeight:900, color:T.white, marginBottom:4 }}>~$3,700/yr</div>
-          <div style={{ fontFamily:T.body, fontSize:11, fontStyle:"italic", color:"#a09890", lineHeight:1.5 }}>per US household, total</div>
+          <div style={{ fontFamily:T.body, fontSize:13, fontStyle:"italic", color:"#a09890", lineHeight:1.5 }}>per US household, total</div>
         </div>
       </div>
       <div style={{ border:`1px solid ${T.rule}`, padding:"24px 20px" }}>
-        <div style={{ fontFamily:T.mono, fontSize:8, color:T.quiet, letterSpacing:3, marginBottom:18 }}>THE COST CASCADE</div>
+        <div style={{ fontFamily:T.mono, fontSize:10, color:T.quiet, letterSpacing:2, marginBottom:18 }}>THE COST CASCADE</div>
         <Diagram id="whopays" def={WHO_PAYS_DEF} ready={mReady} />
       </div>
     </section>
@@ -373,18 +373,18 @@ function WhoCommits({ mReady }) {
       <p style={{ fontFamily:T.body, fontSize:15, color:T.dim, lineHeight:1.85, maxWidth:660, marginBottom:40 }}>
         There is no single profile. Fraud is perpetrated by organized criminal enterprises, trusted professionals, first-time opportunists, and corrupt insiders — often simultaneously across the same systems.
       </p>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))", border:`1px solid ${T.rule}`, marginBottom:48 }}>
+      <div className="perp-grid" style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))", border:`1px solid ${T.rule}`, marginBottom:48 }}>
         {PERPETRATORS.map((p,i) => (
           <div key={p.label} style={{ padding:"20px 18px", borderRight:`1px solid ${T.rule}`, borderBottom:`1px solid ${T.rule}` }}>
             <div style={{ fontFamily:T.serif, fontSize:24, fontWeight:900, color:T.ink, marginBottom:2 }}>{p.stat}</div>
-            <div style={{ fontFamily:T.mono, fontSize:9, color:T.quiet, letterSpacing:1, marginBottom:10 }}>{p.note}</div>
+            <div style={{ fontFamily:T.mono, fontSize:11, color:T.quiet, letterSpacing:1, marginBottom:10 }}>{p.note}</div>
             <div style={{ fontFamily:T.serif, fontSize:13, fontWeight:700, color:T.ink, marginBottom:6 }}>{p.label}</div>
-            <p style={{ fontFamily:T.body, fontSize:11, fontStyle:"italic", color:T.quiet, lineHeight:1.6 }}>{p.blurb}</p>
+            <p style={{ fontFamily:T.body, fontSize:13, fontStyle:"italic", color:T.quiet, lineHeight:1.6 }}>{p.blurb}</p>
           </div>
         ))}
       </div>
       <div style={{ border:`1px solid ${T.rule}`, padding:"24px 20px" }}>
-        <div style={{ fontFamily:T.mono, fontSize:8, color:T.quiet, letterSpacing:3, marginBottom:18 }}>PERPETRATOR TYPES — SCHEME & SCALE</div>
+        <div style={{ fontFamily:T.mono, fontSize:10, color:T.quiet, letterSpacing:2, marginBottom:18 }}>PERPETRATOR TYPES — SCHEME & SCALE</div>
         <Diagram id="whocommits" def={WHO_COMMITS_DEF} ready={mReady} />
       </div>
     </section>
@@ -400,17 +400,17 @@ function HowToStop({ mReady }) {
         Fraud thrives on silence. Every report matters — and whistleblower programs can make you financially whole or earn a significant federal award.
       </p>
       <div style={{ border:`1px solid ${T.rule}`, padding:"24px 20px", marginBottom:40 }}>
-        <div style={{ fontFamily:T.mono, fontSize:8, color:T.quiet, letterSpacing:3, marginBottom:18 }}>REPORTING ECOSYSTEM — WHO TO CALL</div>
+        <div style={{ fontFamily:T.mono, fontSize:10, color:T.quiet, letterSpacing:2, marginBottom:18 }}>REPORTING ECOSYSTEM — WHO TO CALL</div>
         <Diagram id="howtostop" def={HOW_TO_STOP_DEF} ready={mReady} />
       </div>
-      <div style={{ fontFamily:T.mono, fontSize:8, color:T.quiet, letterSpacing:3, marginBottom:20 }}>WHISTLEBLOWER PROGRAMS</div>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(190px,1fr))", border:`1px solid ${T.rule}` }}>
+      <div style={{ fontFamily:T.mono, fontSize:10, color:T.quiet, letterSpacing:2, marginBottom:20 }}>WHISTLEBLOWER PROGRAMS</div>
+      <div className="whistle-grid" style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(190px,1fr))", border:`1px solid ${T.rule}` }}>
         {WHISTLEBLOWER_PROGRAMS.map((p,i) => (
           <div key={p.name} style={{ padding:"20px 18px", borderRight:`1px solid ${T.rule}`, borderBottom:`1px solid ${T.rule}` }}>
-            <div style={{ fontFamily:T.mono, fontSize:8, color:T.quiet, letterSpacing:2, marginBottom:8 }}>{p.agency} · {p.threshold} min</div>
+            <div style={{ fontFamily:T.mono, fontSize:10, color:T.quiet, letterSpacing:2, marginBottom:8 }}>{p.agency} · {p.threshold} min</div>
             <div style={{ fontFamily:T.serif, fontSize:13, fontWeight:700, color:T.ink, lineHeight:1.3, marginBottom:8 }}>{p.name}</div>
             <div style={{ fontFamily:T.serif, fontSize:28, fontWeight:900, color:T.green, marginBottom:6 }}>{p.reward}</div>
-            <p style={{ fontFamily:T.body, fontSize:11, fontStyle:"italic", color:T.quiet, lineHeight:1.6 }}>{p.blurb}</p>
+            <p style={{ fontFamily:T.body, fontSize:13, fontStyle:"italic", color:T.quiet, lineHeight:1.6 }}>{p.blurb}</p>
           </div>
         ))}
       </div>
@@ -422,14 +422,14 @@ function HowToStop({ mReady }) {
 function DetailPage({ cat, mReady, onBack }) {
   const r = REPORTING[cat.id];
   return (
-    <main style={{ maxWidth:880, margin:"0 auto", padding:"0 32px 80px" }}>
-      <nav aria-label="Breadcrumb" style={{ padding:"20px 0 0", borderBottom:`1px solid ${T.rule}`, marginBottom:0 }}>
-        <button onClick={onBack} style={{ fontFamily:T.mono, fontSize:9, color:T.quiet, cursor:"pointer", letterSpacing:2, textTransform:"uppercase", background:"none", border:"none", padding:0 }}>
+    <main id="main-content" className="detail-pad" style={{ maxWidth:880, margin:"0 auto", padding:"0 32px 80px" }}>
+      <nav aria-label="Breadcrumb" style={{ padding:"8px 0 0", borderBottom:`1px solid ${T.rule}`, marginBottom:0 }}>
+        <button onClick={onBack} style={{ fontFamily:T.mono, fontSize:11, color:T.quiet, cursor:"pointer", letterSpacing:2, textTransform:"uppercase", background:"none", border:"none", padding:"12px 0", minHeight:44 }}>
           ← All Categories
         </button>
       </nav>
       <div style={{ paddingTop:40, marginBottom:12 }}>
-        <div style={{ fontFamily:T.mono, fontSize:8, color:T.quiet, letterSpacing:3, textTransform:"uppercase", marginBottom:16 }}>
+        <div style={{ fontFamily:T.mono, fontSize:10, color:T.quiet, letterSpacing:2, textTransform:"uppercase", marginBottom:16 }}>
           Fraud Category · {cat.icon}
         </div>
         <h1 style={{ fontFamily:T.serif, fontSize:"clamp(26px,5vw,48px)", fontWeight:900, color:T.ink, lineHeight:1.1, marginBottom:20 }}>{cat.label}</h1>
@@ -446,7 +446,7 @@ function DetailPage({ cat, mReady, onBack }) {
       {r && (
         <div style={{ borderLeft:`3px solid ${T.ink}`, paddingLeft:20, margin:"36px 0", display:"flex", flexWrap:"wrap", gap:24, alignItems:"flex-start" }}>
           <div>
-            <div style={{ fontFamily:T.mono, fontSize:8, color:T.red, letterSpacing:3, marginBottom:8 }}>REPORT THIS FRAUD</div>
+            <div style={{ fontFamily:T.mono, fontSize:10, color:T.red, letterSpacing:2, marginBottom:8 }}>REPORT THIS FRAUD</div>
             <div style={{ fontFamily:T.serif, fontSize:14, fontWeight:700, color:T.ink, marginBottom:4 }}>{r.agency}</div>
             <div style={{ fontFamily:T.mono, fontSize:13, color:T.red }}>{r.hotline}</div>
             <div style={{ fontFamily:T.mono, fontSize:10, color:"#2563eb", marginTop:2 }}>{r.url}</div>
@@ -457,14 +457,14 @@ function DetailPage({ cat, mReady, onBack }) {
 
       {/* Diagram */}
       <div style={{ border:`1px solid ${T.rule}`, padding:"24px 20px", margin:"36px 0" }}>
-        <div style={{ fontFamily:T.mono, fontSize:8, color:T.quiet, letterSpacing:3, marginBottom:18 }}>SCHEME TOPOLOGY</div>
+        <div style={{ fontFamily:T.mono, fontSize:10, color:T.quiet, letterSpacing:2, marginBottom:18 }}>SCHEME TOPOLOGY</div>
         <Diagram id={cat.id} def={cat.diagram} ready={mReady} />
       </div>
 
       {/* Cases + Statutes — responsive, not hardcoded 1fr 1fr */}
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))", gap:40, borderTop:`1px solid ${T.rule}`, paddingTop:32 }}>
+      <div className="cases-grid" style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))", gap:40, borderTop:`1px solid ${T.rule}`, paddingTop:32 }}>
         <div>
-          <div style={{ fontFamily:T.mono, fontSize:8, color:T.quiet, letterSpacing:3, marginBottom:20 }}>PROSECUTED CASES</div>
+          <div style={{ fontFamily:T.mono, fontSize:10, color:T.quiet, letterSpacing:2, marginBottom:20 }}>PROSECUTED CASES</div>
           {cat.cases.map(c => (
             <div key={c} style={{ fontFamily:T.body, fontSize:12, color:T.dim, padding:"10px 0", borderBottom:`1px solid ${T.rule}`, lineHeight:1.7 }}>
               <span style={{ color:T.red, marginRight:10, fontSize:10 }}>◆</span>{c}
@@ -472,7 +472,7 @@ function DetailPage({ cat, mReady, onBack }) {
           ))}
         </div>
         <div>
-          <div style={{ fontFamily:T.mono, fontSize:8, color:T.quiet, letterSpacing:3, marginBottom:20 }}>FEDERAL STATUTES</div>
+          <div style={{ fontFamily:T.mono, fontSize:10, color:T.quiet, letterSpacing:2, marginBottom:20 }}>FEDERAL STATUTES</div>
           {cat.statutes.map(s => (
             <div key={s} style={{ fontFamily:T.mono, fontSize:11, color:T.dim, padding:"10px 0", borderBottom:`1px solid ${T.rule}`, lineHeight:1.7 }}>
               <span style={{ color:T.ink, marginRight:8 }}>§</span>{s}
@@ -612,33 +612,107 @@ async function load() {
       <style>{`
         @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+        html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-        * { box-sizing:border-box; margin:0; padding:0; }
-        ::-webkit-scrollbar { width:5px; }
-        ::-webkit-scrollbar-track { background:${T.paper}; }
-        ::-webkit-scrollbar-thumb { background:${T.rule}; }
-        [role="button"]:focus-visible, button:focus-visible, input:focus-visible {
-          outline: 2px solid ${T.ink};
-          outline-offset: 2px;
+
+        /* Skip link */
+        .skip-link {
+          position: absolute; top: -100%; left: 16px; z-index: 9999;
+          background: ${T.ink}; color: ${T.white};
+          padding: 10px 16px; font-family: ${T.mono}; font-size: 13px; letter-spacing: 1px;
+          text-decoration: none;
         }
-        /* Responsive overrides */
+        .skip-link:focus { top: 8px; }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: ${T.paper}; }
+        ::-webkit-scrollbar-thumb { background: ${T.rule}; }
+
+        /* Focus — on-brand, high-contrast */
+        [role="button"]:focus-visible, button:focus-visible, input:focus-visible, a:focus-visible {
+          outline: 2px solid ${T.red};
+          outline-offset: 3px;
+          border-radius: 1px;
+        }
+
+        /* Touch targets: all buttons at least 44px tall */
+        button { min-height: 44px; }
+
+        /* Tablet — 768px */
+        @media (max-width: 768px) {
+          .page-pad  { padding-left: 24px !important; padding-right: 24px !important; }
+          .detail-pad { padding-left: 24px !important; padding-right: 24px !important; }
+          .header-inner { padding-left: 20px !important; padding-right: 20px !important; }
+          .hero-section { padding-top: 48px !important; padding-bottom: 36px !important; }
+          .section-rule { margin-top: 40px !important; margin-bottom: 28px !important; }
+        }
+
+        /* Mobile — 640px */
         @media (max-width: 640px) {
-          .hero-grid { grid-template-columns: 1fr !important; }
+          .hero-grid   { grid-template-columns: 1fr !important; }
           .hero-sidebar { display: none !important; }
           .masthead-sub { display: none !important; }
           .session-widget { display: none !important; }
+          .page-pad  { padding-left: 20px !important; padding-right: 20px !important; }
+          .detail-pad { padding-left: 20px !important; padding-right: 20px !important; }
+          .header-inner { padding-left: 16px !important; padding-right: 16px !important; }
+          .hero-section { padding-top: 36px !important; padding-bottom: 28px !important; }
+          .section-rule { margin-top: 32px !important; margin-bottom: 20px !important; }
+          .featured-flex { flex-direction: column !important; }
+          .cost-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .perp-grid { grid-template-columns: 1fr !important; }
+          .whistle-grid { grid-template-columns: 1fr !important; }
+          .cases-grid { grid-template-columns: 1fr !important; }
+          .search-input { display: none !important; }
+          .recent-header { flex-wrap: wrap !important; gap: 8px !important; }
         }
+
+        /* Small mobile — 480px */
         @media (max-width: 480px) {
-          .page-pad { padding-left: 16px !important; padding-right: 16px !important; }
+          .page-pad  { padding-left: 16px !important; padding-right: 16px !important; }
           .detail-pad { padding-left: 16px !important; padding-right: 16px !important; }
+          .header-inner { padding-left: 12px !important; padding-right: 12px !important; }
+          .cost-grid { grid-template-columns: 1fr !important; }
         }
+
+        /* Hero sidebar: compact 3-col data grid */
+        .hero-sidebar {
+          display: grid !important;
+          grid-template-columns: repeat(3, 1fr) !important;
+          gap: 1px !important;
+          background: ${T.rule} !important;
+          border: 1px solid ${T.rule} !important;
+          flex-direction: unset !important;
+          min-width: 0 !important;
+        }
+        .hero-sidebar button {
+          background: ${T.white} !important;
+          padding: 10px 12px !important;
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          justify-content: space-between !important;
+          gap: 4px !important;
+          min-height: 0 !important;
+          height: 60px !important;
+        }
+
+        /* Category grid: 3 columns on desktop, 2 on tablet, 1 on mobile */
+        .cat-grid-3 { grid-template-columns: repeat(3, 1fr) !important; }
+        @media (max-width: 900px) { .cat-grid-3 { grid-template-columns: repeat(2, 1fr) !important; } }
+        @media (max-width: 640px) { .cat-grid-3 { grid-template-columns: 1fr !important; } }
       `}</style>
+
+      {/* Skip to main content — keyboard / AT */}
+      <a href="#main-content" className="skip-link">Skip to main content</a>
 
       <NewsTicker headlines={headlines} />
 
       {/* MASTHEAD */}
       <header role="banner" style={{ background:T.white, borderBottom:`2px solid ${T.ink}`, position:"sticky", top:0, zIndex:100 }}>
-        <div style={{ maxWidth:1160, margin:"0 auto", padding:"0 32px", display:"flex", alignItems:"center", height:56, gap:16 }}>
+        <div className="header-inner" style={{ maxWidth:1160, margin:"0 auto", padding:"0 32px", display:"flex", alignItems:"center", height:56, gap:16 }}>
           <button onClick={() => setPage("home")} aria-label="Go to home page" style={{ cursor:"pointer", display:"flex", alignItems:"center", gap:12, background:"none", border:"none", padding:0 }}>
             <div style={{ width:8, height:8, background:T.red, flexShrink:0 }} aria-hidden="true" />
             <span style={{ fontFamily:T.serif, fontWeight:900, fontSize:20, color:T.ink, letterSpacing:"-0.5px", whiteSpace:"nowrap" }}>
@@ -647,7 +721,7 @@ async function load() {
           </button>
           <div className="masthead-sub" style={{ display:"flex", alignItems:"center", gap:8 }}>
             <div style={{ width:1, height:20, background:T.rule }} aria-hidden="true" />
-            <span style={{ fontFamily:T.mono, fontSize:9, color:T.quiet, letterSpacing:1, whiteSpace:"nowrap" }}>US FRAUD INTELLIGENCE · {new Date().getFullYear()}</span>
+            <span style={{ fontFamily:T.mono, fontSize:11, color:T.quiet, letterSpacing:1, whiteSpace:"nowrap" }}>US FRAUD INTELLIGENCE · {new Date().getFullYear()}</span>
           </div>
           <div style={{ flex:1 }} />
           {page==="home" && (
@@ -655,28 +729,29 @@ async function load() {
               value={search} onChange={e => setSearch(e.target.value)}
               placeholder="Search categories…"
               aria-label="Search fraud categories"
+              className="search-input"
               style={{ padding:"5px 12px", border:`1px solid ${T.rule}`, borderBottom:`1px solid ${T.ink}`, background:"transparent", fontFamily:T.mono, fontSize:11, color:T.ink, width:"min(160px, 30vw)" }}
             />
           )}
-          <div style={{ display:"flex", alignItems:"center", gap:6 }} aria-label="Live data indicator">
+          <div role="status" aria-label="Live data" style={{ display:"flex", alignItems:"center", gap:6 }}>
             <div style={{ width:5, height:5, borderRadius:"50%", background:"#16a34a", animation:"pulse 2s infinite" }} aria-hidden="true" />
-            <span style={{ fontFamily:T.mono, fontSize:8, color:"#16a34a", letterSpacing:2 }}>LIVE</span>
+            <span style={{ fontFamily:T.mono, fontSize:10, color:"#16a34a", letterSpacing:2 }} aria-hidden="true">LIVE</span>
           </div>
         </div>
       </header>
 
       {page === "home" && (
-        <main>
+        <main id="main-content">
           <div className="page-pad" style={{ maxWidth:1160, margin:"0 auto", padding:"0 32px" }}>
 
             {/* HERO */}
-            <div style={{ padding:"64px 0 48px", borderBottom:`1px solid ${T.rule}` }}>
-              <div className="hero-grid" style={{ display:"grid", gridTemplateColumns:"1fr auto", gap:40, alignItems:"end" }}>
+            <div className="hero-section" style={{ padding:"64px 0 48px", borderBottom:`1px solid ${T.rule}` }}>
+              <div className="hero-grid" style={{ display:"grid", gridTemplateColumns:"1fr auto", gap:48, alignItems:"center" }}>
                 <div>
-                  <div style={{ fontFamily:T.mono, fontSize:9, color:T.quiet, letterSpacing:4, marginBottom:20 }}>
+                  <div style={{ fontFamily:T.mono, fontSize:11, color:T.quiet, letterSpacing:2, marginBottom:20 }}>
                     ESTIMATED US FRAUD LOSSES — CALENDAR YEAR {new Date().getFullYear()}
                   </div>
-                  <div style={{ fontFamily:T.serif, fontWeight:900, fontSize:"clamp(34px,6.5vw,72px)", color:T.ink, lineHeight:1, letterSpacing:"-2px", marginBottom:16 }} aria-live="polite" aria-label={`Estimated fraud losses: ${fmtBig(totals.total)}`}>
+                  <div style={{ fontFamily:T.serif, fontWeight:900, fontSize:"clamp(34px,6.5vw,72px)", color:T.ink, lineHeight:1, letterSpacing:"-2px", marginBottom:16 }} aria-live="off" aria-label={`Estimated fraud losses: ${fmtBig(totals.total)}`}>
                     {fmtBig(totals.total)}
                   </div>
                   <div style={{ display:"flex", alignItems:"center", gap:12, flexWrap:"wrap" }}>
@@ -686,11 +761,11 @@ async function load() {
                     </span>
                   </div>
                 </div>
-                <nav className="hero-sidebar" aria-label="Category quick links" style={{ display:"flex", flexDirection:"column", gap:8, minWidth:160 }}>
+                <nav className="hero-sidebar" aria-label="Category quick links" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:1, background:T.rule, border:`1px solid ${T.rule}` }}>
                   {CATS.map(c => (
-                    <button key={c.id} onClick={() => setPage(c.id)} style={{ display:"flex", justifyContent:"space-between", gap:12, cursor:"pointer", alignItems:"baseline", background:"none", border:"none", padding:0, textAlign:"left" }}>
-                      <span style={{ fontFamily:T.mono, fontSize:9, color:T.quiet }}>{c.icon} {c.label.split(" ")[0]}</span>
-                      <span style={{ fontFamily:T.mono, fontSize:9, color:T.red }}>{fmtShort(totals[c.id])}</span>
+                    <button key={c.id} onClick={() => setPage(c.id)} style={{ display:"flex", flexDirection:"column", justifyContent:"space-between", gap:4, cursor:"pointer", background:T.white, border:"none", padding:"10px 12px", textAlign:"left", height:60, width:"100%" }}>
+                      <span style={{ fontFamily:T.mono, fontSize:10, color:T.quiet, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{c.icon} {c.label.split(" ")[0]}</span>
+                      <span style={{ fontFamily:T.mono, fontSize:12, color:T.red }}>{fmtShort(totals[c.id])}</span>
                     </button>
                   ))}
                 </nav>
@@ -699,10 +774,10 @@ async function load() {
 
             {/* RECENT CASES */}
             <section aria-labelledby="recent-cases-heading" style={{ padding:"48px 0 44px", borderBottom:`1px solid ${T.rule}` }}>
-              <div style={{ display:"flex", alignItems:"baseline", gap:16, marginBottom:32, flexWrap:"wrap" }}>
+              <div className="recent-header" style={{ display:"flex", alignItems:"baseline", gap:16, marginBottom:32, flexWrap:"wrap" }}>
                 <h2 id="recent-cases-heading" style={{ fontFamily:T.serif, fontSize:26, fontWeight:900, color:T.ink }}>Recent Cases</h2>
                 <div style={{ flex:1, minWidth:40, height:1, background:T.rule }} aria-hidden="true" />
-                <span style={{ fontFamily:T.mono, fontSize:8, color:T.red, letterSpacing:3 }} aria-label="AI sourced live data">AI-SOURCED · LIVE</span>
+                <span style={{ fontFamily:T.mono, fontSize:10, color:T.red, letterSpacing:2 }} aria-label="AI sourced live data">AI-SOURCED · LIVE</span>
               </div>
               {casesLoading ? (
                 <div style={{ display:"flex", gap:32, flexWrap:"wrap" }} aria-busy="true" aria-label="Loading recent cases">
@@ -715,7 +790,7 @@ async function load() {
                   ))}
                 </div>
               ) : featured.length > 0 ? (
-                <div style={{ display:"flex", gap:32, flexWrap:"wrap" }}>
+                <div className="featured-flex" style={{ display:"flex", gap:32, flexWrap:"wrap" }}>
                   {featured.map((item,i) => <FeaturedCard key={i} item={item} idx={i} />)}
                 </div>
               ) : (
@@ -732,7 +807,7 @@ async function load() {
               <Rule label="Fraud Categories" number="IV" />
               <h2 id="categories-heading" className="sr-only">Fraud Categories</h2>
               {search && <p style={{ fontFamily:T.mono, fontSize:10, color:T.quiet, marginBottom:20 }}>{filtered.length} result{filtered.length!==1?"s":""} for "{search}"</p>}
-              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))", gap:"0 32px" }}>
+              <div className="cat-grid-3" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:"0 40px" }}>
                 {filtered.map(cat => (
                   <div key={cat.id} style={{ borderBottom:`1px solid ${T.rule}`, marginBottom:28, paddingBottom:4 }}>
                     <CatTile cat={cat} total={totals[cat.id]} onClick={() => setPage(cat.id)} />
@@ -742,11 +817,11 @@ async function load() {
               {filtered.length === 0 && <p style={{ fontFamily:T.body, fontStyle:"italic", color:T.quiet, padding:"40px 0" }}>No categories match "{search}"</p>}
             </section>
 
-            <footer role="contentinfo" style={{ borderTop:`1px solid ${T.rule}`, padding:"24px 0 48px", display:"flex", justifyContent:"space-between", alignItems:"flex-start", flexWrap:"wrap", gap:16 }}>
-              <p style={{ fontFamily:T.mono, fontSize:9, color:T.quiet, lineHeight:2, maxWidth:600 }}>
-                Sources: FBI Financial Crimes Report · NICB · IRS Data Book · CMS Improper Payments · DOJ PPP Task Force · Javelin Strategy & Research · CoreLogic Mortgage Fraud · SEC Annual Report FY2023 · ACFE Report to the Nations. Dollar figures are best-available annualized estimates. Recent cases sourced live via AI web search against official DOJ/FBI/SEC press releases.
+            <footer role="contentinfo" style={{ borderTop:`1px solid ${T.rule}`, padding:"20px 0 36px", display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:12 }}>
+              <p style={{ fontFamily:T.mono, fontSize:11, color:T.quiet, lineHeight:1.5 }}>
+                Sources: FBI · NICB · IRS · CMS · DOJ · Javelin · CoreLogic · SEC · ACFE &mdash; annualized estimates. Cases sourced live via AI web search.
               </p>
-              <span style={{ fontFamily:T.serif, fontWeight:900, fontSize:14, color:T.rule }} aria-hidden="true">SomebodyStolethat.com</span>
+              <span style={{ fontFamily:T.serif, fontWeight:900, fontSize:14, color:T.rule, flexShrink:0 }} aria-hidden="true">SomebodyStolethat.com</span>
             </footer>
           </div>
         </main>
