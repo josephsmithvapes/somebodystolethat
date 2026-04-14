@@ -547,7 +547,7 @@ async function load() {
       try {
         // Check cache first
         const cached = await fetch(`${API_URL}/api/news-cache`).then(r => r.json());
-        if (cached) {
+        if (cached && (cached.featured?.length || cached.headlines?.length)){
           if (cached.featured) setFeatured(cached.featured);
           if (cached.headlines) setHeadlines(cached.headlines);
           setCasesL(false);
