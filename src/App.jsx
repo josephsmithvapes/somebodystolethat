@@ -561,10 +561,10 @@ async function callAPI(sys, usr) {
           // Silently replace static fallbacks with live headlines
           setHeadlines(parsed.map(h => ({ text: typeof h==="string"?h:h.text||String(h) })));
         }
-      } catch(e) { console.error("News fetch:", e); }
+      } catch(e) { console.error("News fetch:", e); setTimeout(load, 5000); }
       finally { setCasesL(false); }
     }
-    load();
+   setTimeout(load, 2000);
   }, []);
 
   // Counter
