@@ -515,19 +515,34 @@ export default function FraudWatch() {
   // Live news — two focused calls with proven parser
   useEffect(() => {
     const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
-    async function callAPI(sys, usr) {
-      const res = await fetch(`${API_URL}/api/chat`, {
-        method:"POST", headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:1500, tools:[{ type:"web_search_20250305", name:"web_search" }], tool_choice:{ type:"auto" }, system:sys, messages:[{ role:"user", content:usr }] })
-      });
-      const data = await res.json();
-      let txt = "";
-      for (const b of data.content||[]) {
-        if (b.type==="text") txt += b.text;
-        if (b.type==="tool_result") { if (typeof b.content==="string") txt+=b.content; if (Array.isArray(b.content)) txt+=b.content.map(x=>x.text||"").join(""); }
-      }
-      return txt;
+    const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET || "";
+async function callAPI(sys, usr) {
+  const res = await fetch(`${API_URL}/api/chat`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-client-secret": CLIENT_SECRET,
+    },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 1500,
+      tools: [{ type: "web_search_20250305", name: "web_search" }],
+      tool_choice: { type: "auto" },
+      system: sys,
+      messages: [{ role: "user", content: usr }]
+    })
+  });
+  const data = await res.json();
+  let txt = "";
+  for (const b of data.content || []) {
+    if (b.type === "text") txt += b.text;
+    if (b.type === "tool_result") {
+      if (typeof b.content === "string") txt += b.content;
+      if (Array.isArray(b.content)) txt += b.content.map(x => x.text || "").join("");
     }
+  }
+  return txt;
+}
     async function load() {
       try {
         const ct = await callAPI(
