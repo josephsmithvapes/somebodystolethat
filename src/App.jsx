@@ -524,7 +524,7 @@ async function callAPI(sys, usr) {
     },
     body: JSON.stringify({
       clientSecret: CLIENT_SECRET,
-      model: "claude-sonnet-4-20250514",
+      model: "claude-haiku-4-5-20251001",
       max_tokens: 4000,
       tools: [{ type: "web_search_20250305", name: "web_search" }],
       tool_choice: { type: "auto" },
@@ -543,29 +543,51 @@ async function callAPI(sys, usr) {
   }
   return txt;
 }
-    async function load() {
+async function load() {
       try {
+        // Check cache first
+        const cached = await fetch(`${API_URL}/api/news-cache`).then(r => r.json());
+        if (cached) {
+          if (cached.featured) setFeatured(cached.featured);
+          if (cached.headlines) setHeadlines(cached.headlines);
+          setCasesL(false);
+          return;
+        }
+
+        // Cache miss — call Anthropic with Haiku
         const ct = await callAPI(
           `You are a fraud intelligence analyst. Use web_search to find recent US fraud cases from official sources (justice.gov, fbi.gov, sec.gov, ftc.gov) in 2025. Return ONLY a raw JSON array — no markdown, no backticks. Each of 4 objects: title (string), category (one of: healthcare,insurance,tax,medicare,ppp,identity,securities,realestate,immigration), amount (string), date (string), location (string), summary (one sentence under 25 words).`,
           `Search justice.gov and fbi.gov for fraud press releases in 2025. Return 4 results as JSON array only.`
         );
-        const cm = ct.match(/\[[\s\S]*\]/); if (cm) setFeatured(JSON.parse(cm[0]));
+        const cm = ct.match(/\[[\s\S]*\]/);
+        const featured = cm ? JSON.parse(cm[0]) : [];
+        if (featured.length) setFeatured(featured);
 
         const ht = await callAPI(
           `Use web_search to find 8 recent 2025 US fraud enforcement actions from DOJ, FBI, SEC, FTC, IRS official sources. Return ONLY a raw JSON array of 8 short strings (max 12 words each). No markdown, no backticks.`,
           `Search for recent 2025 fraud enforcement news. Return 8 headline strings as JSON array only.`
         );
         const hm = ht.match(/\[[\s\S]*\]/);
-        if (hm) {
-          const parsed = JSON.parse(hm[0]);
-          // Silently replace static fallbacks with live headlines
-          setHeadlines(parsed.map(h => ({ text: typeof h==="string"?h:h.text||String(h) })));
-        }
-      } catch(e) { console.error("News fetch:", e); setTimeout(load, 5000); }
-      finally { setCasesL(false); }
+        const headlines = hm
+          ? JSON.parse(hm[0]).map(h => ({ text: typeof h === "string" ? h : h.text || String(h) }))
+          : [];
+        if (headlines.length) setHeadlines(headlines);
+
+        // Save to cache
+        await fetch(`${API_URL}/api/news-cache`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ featured, headlines })
+        });
+
+      } catch(e) {
+        console.error("News fetch:", e);
+        setTimeout(load, 5000);
+      } finally {
+        setCasesL(false);
+      }
     }
-   setTimeout(load, 2000);
-  }, []);
+    setTimeout(load, 2000);
 
   // Counter
   useEffect(() => {
