@@ -278,7 +278,7 @@ function BackToTop() {
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Back to top"
       style={{
-        position:"fixed", bottom:"max(24px, env(safe-area-inset-bottom, 24px))", left:24,
+        position:"fixed", bottom:"max(24px, env(safe-area-inset-bottom, 24px))", right:24,
         zIndex:200, width:40, height:40,
         background:T.ink, border:"none", cursor:"pointer",
         display:"flex", alignItems:"center", justifyContent:"center",
@@ -307,7 +307,7 @@ function SessionWidget() {
   if (!vis) return null;
   const stolen = (elapsed/1000) * TOTAL_PER_SEC;
   return (
-    <aside aria-label="Fraud losses since you arrived" style={{ position:"fixed", bottom:"max(24px, env(safe-area-inset-bottom, 24px))", right:24, zIndex:200, background:T.white, border:`1px solid ${T.ruleHard}`, padding:"14px 18px 12px", maxWidth:200, boxShadow:"0 2px 20px rgba(0,0,0,0.08)" }}>
+    <aside aria-label="Fraud losses since you arrived" style={{ position:"fixed", bottom:"max(24px, env(safe-area-inset-bottom, 24px))", left:24, zIndex:200, background:T.white, border:`1px solid ${T.ruleHard}`, padding:"14px 18px 12px", maxWidth:200, boxShadow:"0 2px 20px rgba(0,0,0,0.08)" }}>
       <div style={{ display:"flex", justifyContent:"space-between", marginBottom:8 }}>
         <span style={{ fontFamily:T.mono, fontSize:10, color:T.red, letterSpacing:2 }}>SINCE YOU ARRIVED</span>
         <button onClick={() => setVis(false)} aria-label="Dismiss" style={{ fontFamily:T.mono, fontSize:13, color:T.quiet, cursor:"pointer", background:"none", border:"none", padding:"4px 6px", minHeight:32, lineHeight:1 }}>×</button>
