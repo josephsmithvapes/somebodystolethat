@@ -514,8 +514,9 @@ export default function FraudWatch() {
 
   // Live news — two focused calls with proven parser
   useEffect(() => {
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
     async function callAPI(sys, usr) {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch(`${API_URL}/api/chat`, {
         method:"POST", headers:{ "Content-Type":"application/json" },
         body: JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:1500, tools:[{ type:"web_search_20250305", name:"web_search" }], tool_choice:{ type:"auto" }, system:sys, messages:[{ role:"user", content:usr }] })
       });
