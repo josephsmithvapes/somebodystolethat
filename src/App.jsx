@@ -525,7 +525,7 @@ async function callAPI(sys, usr) {
     body: JSON.stringify({
       clientSecret: CLIENT_SECRET,
       model: "claude-sonnet-4-20250514",
-      max_tokens: 1500,
+      max_tokens: 4000,
       tools: [{ type: "web_search_20250305", name: "web_search" }],
       tool_choice: { type: "auto" },
       system: sys,
