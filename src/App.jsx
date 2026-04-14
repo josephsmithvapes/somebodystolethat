@@ -803,7 +803,7 @@ async function load() {
               </div>
             </div>
 
-            {/* RECENT CASES */}
+            {/* RECENT CASES — commented out (API credit limit)
             <section aria-labelledby="recent-cases-heading" style={{ padding:"48px 0 44px", borderBottom:`1px solid ${T.rule}` }}>
               <div className="recent-header" style={{ display:"flex", alignItems:"baseline", gap:16, marginBottom:32, flexWrap:"wrap" }}>
                 <h2 id="recent-cases-heading" style={{ fontFamily:T.serif, fontSize:26, fontWeight:900, color:T.ink }}>Recent Cases</h2>
@@ -828,6 +828,7 @@ async function load() {
                 <p style={{ fontFamily:T.body, fontStyle:"italic", color:T.quiet }}>Unable to load live cases. Check back shortly.</p>
               )}
             </section>
+            */}
 
             <WhoPays mReady={mReady} />
             <WhoCommits mReady={mReady} />
