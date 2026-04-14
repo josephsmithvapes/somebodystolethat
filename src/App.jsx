@@ -265,6 +265,37 @@ function NewsTicker({ headlines }) {
   );
 }
 
+// ── BACK TO TOP ───────────────────────────────────────────────────────────────
+function BackToTop() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 320);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      aria-label="Back to top"
+      style={{
+        position:"fixed", bottom:"max(24px, env(safe-area-inset-bottom, 24px))", left:24,
+        zIndex:200, width:40, height:40,
+        background:T.ink, border:"none", cursor:"pointer",
+        display:"flex", alignItems:"center", justifyContent:"center",
+        boxShadow:"0 2px 12px rgba(0,0,0,0.15)",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(12px)",
+        transition:"opacity 0.2s ease, transform 0.2s ease",
+        pointerEvents: visible ? "auto" : "none",
+      }}
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M7 11V3M3 7l4-4 4 4" stroke="#f8f6f1" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    </button>
+  );
+}
+
 // ── SESSION WIDGET ─────────────────────────────────────────────────────────────
 function SessionWidget() {
   const [elapsed, setElapsed] = useState(0);
@@ -828,6 +859,7 @@ async function load() {
       )}
 
       {activeCat && <DetailPage cat={activeCat} mReady={mReady} onBack={() => setPage("home")} />}
+      <BackToTop />
       <div className="session-widget"><SessionWidget /></div>
     </div>
   );
